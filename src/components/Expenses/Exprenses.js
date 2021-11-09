@@ -16,30 +16,14 @@ function Exprenses(props) {
                 selected={filteredYear}
                 onChangeSelection={handlerChangeSelection}
             />
-            <ExpenseItem
-                id={props.items[0].id}
-                date={props.items[0].date}
-                title={props.items[0].title}
-                amount={props.items[0].amount}
-            />
-            <ExpenseItem
-                id={props.items[1].id}
-                date={props.items[1].date}
-                title={props.items[1].title}
-                amount={props.items[1].amount}
-            />
-            <ExpenseItem
-                id={props.items[2].id}
-                date={props.items[2].date}
-                title={props.items[2].title}
-                amount={props.items[2].amount}
-            />
-            <ExpenseItem
-                id={props.items[3].id}
-                date={props.items[3].date}
-                title={props.items[3].title}
-                amount={props.items[3].amount}
-            />
+            {props.items.map(expense => {
+                return <ExpenseItem
+                    id={expense.id}
+                    date={expense.date}
+                    title={expense.title}
+                    amount={expense.amount}
+                />
+            })}
         </div>
     )
 }
