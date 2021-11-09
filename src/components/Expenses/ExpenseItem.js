@@ -7,11 +7,11 @@ function ExpenseItem(props) {
     const [amount, setAmount] = useState(props.amount);
     const clickIncrementHandler = (value) => () => {
         setAmount((p) => {
-            return value > 0 ? p + 1 : p - 1;
+            return value > 0 ? +p + 1 : +p - 1;
         });
     }
     return (
-        <Card id={props.id} className="expense-item">
+        <Card id={props.id} className="expense-item" custom-attribute="some-value">
             <ExpenseDate date={props.date} />
             <div className="expense-item__description">
                 <h2>{props.title}</h2>
