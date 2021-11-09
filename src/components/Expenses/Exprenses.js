@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
-import './Expenses.css'
-import ExpenseItem from './ExpenseItem'
+import React, { useState } from 'react';
+
 import ExpenseFilter from './ExpenseFilter';
+import ExpenseList from './ExpenseList';
+import ExpenseChart from './ExpenseChart';
+
+import './Expenses.css';
 
 function Exprenses(props) {
     const [filteredYear, setFilteredYear] = useState('2020');
+    const filteredItems = props.items.filter(i => i.date.getFullYear().toString() === filteredYear);
 
     const handlerChangeSelection = year => {
         setFilteredYear(year);
@@ -16,17 +20,10 @@ function Exprenses(props) {
                 selected={filteredYear}
                 onChangeSelection={handlerChangeSelection}
             />
-            {props.items.map(expense => {
-                return <ExpenseItem
-                    key={expense.id}
-                    id={expense.id}
-                    date={expense.date}
-                    title={expense.title}
-                    amount={expense.amount}
-                />
-            })}
+            <ExpenseChart items={filteredItems} />
+            <ExpenseList items={filteredItems}/>
         </div>
     )
 }
 
-export default Exprenses
+export default Exprenses;
