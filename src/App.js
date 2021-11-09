@@ -32,7 +32,6 @@ const INIT = [
 function App() {
   const [expenses, setExpenses] = useState(INIT);
   const addExpenseDataHandler = data => {
-    console.info("From App.js", data);
     setExpenses((prevExpenses) => {
       return [data, ...prevExpenses];
     });
