@@ -1,28 +1,26 @@
-import React, {useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
 
-import './App.css';
 import AddUser from './components/Users/AddUser';
-import Users from './components/Users/Users';
+import UsersList from './components/Users/UsersList';
 
-const App = () => {
-  const [users, setUsers] = useState([]);
+function App() {
+  const [usersList, setUsersList] = useState([]);
 
-  const addUSerHandler = (username, age) => {
-    setUsers((prevUsers) => {
-      const currentUser = {};
-      currentUser.username = username;
-      currentUser.age = age;
-      currentUser.id = uuidv4();
-      return [...prevUsers, currentUser];
-    })
-  }
+  const addUserHandler = (uName, uAge) => {
+    setUsersList((prevUsersList) => {
+      return [
+        ...prevUsersList,
+        { name: uName, age: uAge, id: Math.random().toString() },
+      ];
+    });
+  };
+
   return (
     <div>
-      <AddUser onAddUser={addUSerHandler}/>
-      <Users users={users} />
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={usersList} />
     </div>
   );
-};
+}
 
 export default App;
