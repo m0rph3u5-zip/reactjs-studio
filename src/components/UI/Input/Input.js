@@ -1,9 +1,8 @@
-import react from "react";
 import React, { useRef, useImperativeHandle } from "react";
 
 import classes from './Input.module.css';
 
-const Input = react.forwardRef((props, ref) => {
+const Input = React.forwardRef((props, ref) => {
     const refInput = useRef();
 
     const activate = () => {
