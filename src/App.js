@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import ReducerLogin from './components/Login/ReducerLogin';
 
 function App() {
+  const useRedurerLogin = true;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -28,7 +30,8 @@ function App() {
     <React.Fragment>
       <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {!isLoggedIn && useRedurerLogin && <ReducerLogin onLogin={loginHandler}/>}
+        {!isLoggedIn && !useRedurerLogin && <Login onLogin={loginHandler} />}
         {isLoggedIn && <Home onLogout={logoutHandler} />}
       </main>
     </React.Fragment>
