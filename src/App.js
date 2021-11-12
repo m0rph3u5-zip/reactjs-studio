@@ -11,12 +11,12 @@ function App() {
   const toggleShowCart = (state) => () => {
     console.log(state);
     setCartToggle(!state);
-  }
+  };
 
   return (
     <CartProvider>
       {cartToggleState && <Cart onHideCart={toggleShowCart(cartToggleState)} />}
-      <Header onShowCart={toggleShowCart(cartToggleState)}/>
+      <Header onShowCart={toggleShowCart(cartToggleState)} />
       <main>
         <Meals />
       </main>
