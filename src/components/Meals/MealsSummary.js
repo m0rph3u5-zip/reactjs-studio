@@ -1,3 +1,4 @@
+import React from 'react';
 import classes from './MealsSummary.module.css';
 
 const MealsSummary = () => {
@@ -8,7 +9,7 @@ const MealsSummary = () => {
       </h2>
       <p>
         Puoi selezionare la quantità di ciascun piatto e aggiungerlo al carrello.<br />
-        Inotra l'ordine dirattamente in cucina, sarà pronto in men che non si dica!
+        Inotra l&apos;ordine dirattamente in cucina, sarà pronto in men che non si dica!
       </p>
     </section>
   );
