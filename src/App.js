@@ -4,6 +4,7 @@ import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
 import Cart from './components/Cart/Cart';
 import CartProvider from './store/CartProvider';
+import ButtonStatic from './components/Statless/ButtonStatic';
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
@@ -16,6 +17,10 @@ function App() {
     setCartIsShown(false);
   };
 
+  const onClickHandler = () => {
+    console.log('event button on click');
+  }
+  
   return (
     <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} />}
@@ -23,6 +28,7 @@ function App() {
       <main>
         <Meals />
       </main>
+      <ButtonStatic onClick={onClickHandler}>Tasto Demo</ButtonStatic>
     </CartProvider>
   );
 }
