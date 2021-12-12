@@ -1,4 +1,4 @@
-const BasicForm = (props) => {
+const BasicForm = () => {
   return (
     <form>
       <div className='control-group'>
