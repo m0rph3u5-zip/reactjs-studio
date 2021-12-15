@@ -1,10 +1,20 @@
+import { Fragment } from 'react';
+
+import BasicForm from './components/BasicForm';
 import SimpleInput from './components/SimpleInput';
 
 function App() {
   return (
-    <div className="app">
-      <SimpleInput />
-    </div>
+    <Fragment>
+      <div className='app'>
+        <h1>Simple Form</h1>
+        <SimpleInput />
+      </div>
+      <div className='app'>
+        <h1>Basic Form</h1>
+        <BasicForm />
+      </div>
+    </Fragment>
   );
 }
 

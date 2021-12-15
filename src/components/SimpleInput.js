@@ -67,7 +67,6 @@ const SimpleInput = () => {
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <span>Valid Form: {formIsValid.toString()}</span>
       <div className={classNameControlValid}>
         <label htmlFor='name'>Nominativo</label>
         <input
@@ -80,7 +79,7 @@ const SimpleInput = () => {
           onKeyDown={keyDownHandler}
         />
         {nameIsInvalid && (
-          <div className='error-text'>Il nome inserito non è valido</div>
+          <small className='error-text'>Il nome inserito non è valido</small>
         )}
       </div>
       <div className={classEmailControlValid}>
@@ -95,11 +94,11 @@ const SimpleInput = () => {
           onKeyDown={keyDownHandler}
         />
         {emailIsInvalid && (
-          <div className='error-text'>La mail non è valida.</div>
+          <small className='error-text'>La mail non è valida.</small>
         )}
       </div>
       <div className='form-actions'>
-        <button disabled={!formIsValid}>Invia</button>
+        <button disabled={!formIsValid}>Salva</button>
       </div>
     </form>
   );
