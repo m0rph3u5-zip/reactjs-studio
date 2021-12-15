@@ -1,0 +1,6 @@
+{
+  "serverUrl": "https://react-studio-92313-default-rtdb.europe-west1.firebasedatabase.app/",
+  "menu": {
+    "enpoint": "meals.json"
+  }
+}

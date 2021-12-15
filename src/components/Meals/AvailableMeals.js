@@ -1,50 +1,61 @@
-import React from 'react';
+import { useEffect, useState } from 'react/cjs/react.development';
+
+import configData from '../../env/config.json';
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
 
-const MENU = [
-  {
-    id: 'm1',
-    name: 'Pasta al Pomodoro',
-    description: 'Ingredienti: spaghetti n.7, passata di pomodoro, parmigiano reggiano dop (30 mesi)',
-    price: 5,
-  },
-  {
-    id: 'm2',
-    name: 'Carbonara',
-    description: 'Ingredienti: spaghetti n.7, uova, guanciale, parmigiano reggiano dop (30 mesi)',
-    price: 8,
-  },
-  {
-    id: 'm3',
-    name: 'Cacio e Pepe',
-    description: 'Ingredienti: spaghetti n.7, caciocavallo podolico, pepe',
-    price: 5,
-  },
-  {
-    id: 'm4',
-    name: 'Pasta al pesto',
-    description: 'Ingredienti: trofie, pesto (basilico, aglio, parmigianno, olio evo)',
-    price: 4,
-  },
-];
-
 const AvailableMeals = () => {
-  const mealsList = MENU.map((meal) => (
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [menu, setMenu] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const response = await fetch(
+        `${configData.serverUrl}${configData.menu.enpoint}`
+      );
+
+      if (!response.ok) {
+        console.error(response.status);
+        setError(true);
+      }
+      const data = await response.json();
+
+      const loadedMenu = [];
+      for (const key in data) {
+        loadedMenu.push({
+          id: key,
+          name: data[key].name,
+          description: data[key].description,
+          price: data[key].price,
+        });
+      }
+
+      setMenu(loadedMenu);
+      setLoading(false);
+    };
+
+    getData();
+  }, []);
+
+  const mealsList = menu.map((item) => (
     <MealItem
-      key={meal.id}
-      id={meal.id}
-      name={meal.name}
-      description={meal.description}
-      price={meal.price}
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      description={item.description}
+      price={item.price}
     />
   ));
 
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
+        {loading && !error && <div>Caricamento dati in corso...</div>}
+        {error && <div>Impossibile caricare i dati. Riprova più tardi!</div>}
+        {!loading && !error && <ul>{mealsList}</ul>}
       </Card>
     </section>
   );

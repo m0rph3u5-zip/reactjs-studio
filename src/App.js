@@ -28,7 +28,7 @@ function App() {
       <main>
         <Meals />
       </main>
-      <ButtonStatic onClick={onClickHandler}>Tasto Demo</ButtonStatic>
+      {/* <ButtonStatic onClick={onClickHandler}>Tasto Demo</ButtonStatic> */}
     </CartProvider>
   );
 }
