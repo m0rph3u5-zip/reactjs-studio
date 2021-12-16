@@ -4,7 +4,9 @@ import useInput from '../hooks/use-input';
 const validateValue = (value) => value.trim().length > 0;
 const validateEmail = (value) => {
   const validators = ['@', '.'];
-  return validators.every(v => value.contains(value));
+  return (
+    value.trim().length > 0 && validators.every((crt) => email.includes(crt))
+  );
 };
 
 const Checkout = (props) => {
@@ -24,15 +26,49 @@ const Checkout = (props) => {
     inputBlurHandler: emailBlurHandler,
     hasError: emailIsInvalid,
     reset: emailReset,
+  } = useInput(validateEmail);
+
+  const {
+    value: addressValue,
+    isValid: addressIsValid,
+    valueChangeHandler: addressChangeHandler,
+    inputBlurHandler: addressBlurHandler,
+    hasError: addressIsInvalid,
+    reset: addressReset,
   } = useInput(validateValue);
 
-  const formIsValid = nameIsValid;
+  const {
+    value: capValue,
+    isValid: capIsValid,
+    valueChangeHandler: capChangeHandler,
+    inputBlurHandler: capBlurHandler,
+    hasError: capIsInvalid,
+    reset: capReset,
+  } = useInput(validateValue);
+
+  const {
+    value: cityValue,
+    isValid: cityIsValid,
+    valueChangeHandler: cityChangeHandler,
+    inputBlurHandler: cityBlurHandler,
+    hasError: cityIsInvalid,
+    reset: cityReset,
+  } = useInput(validateValue);
+
+  const formIsValid = nameIsValid && emailIsValid && cityIsValid && capIsValid && addressIsValid && capReset;
+
+  const resetForm = () => {
+    nameReset();
+    addressReset();
+    emailReset();
+    cityReset();
+  };
 
   const confirmHandler = (e) => {
     e.preventDefault();
 
     console.log('checkout submitted successfull..');
-    nameReset();
+    resetForm();
   };
 
   return (
@@ -71,23 +107,61 @@ const Checkout = (props) => {
           />
           {emailIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div className={classes.control}>
-          <label htmlFor='street'>Indirizzo</label>
-          <input type='text' id='street' />
+        <div
+          className={`${classes.control} ${
+            addressIsInvalid ? classes.invalid : ''
+          }`}
+        >
+          <label htmlFor='address'>Indirizzo</label>
+          <input
+            type='text'
+            id='address'
+            value={addressValue}
+            onChange={addressChangeHandler}
+            onBlur={addressBlurHandler}
+            autoComplete='off'
+          />
+          {addressIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div className={classes.control}>
-          <label htmlFor='postal'>CAP</label>
-          <input type='text' id='postal' />
+        <div
+          className={`${classes.control} ${
+            capIsInvalid ? classes.invalid : ''
+          }`}
+        >
+          <label htmlFor='cap'>CAP</label>
+          <input
+            type='text'
+            id='cap'
+            value={capValue}
+            onChange={capChangeHandler}
+            onBlur={capBlurHandler}
+            autoComplete='off'
+          />
+          {capIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div className={classes.control}>
+        <div
+          className={`${classes.control} ${
+            cityIsInvalid ? classes.invalid : ''
+          }`}
+        >
           <label htmlFor='city'>Citta</label>
-          <input type='text' id='city' />
+          <input
+            type='text'
+            id='city'
+            value={cityValue}
+            onChange={cityChangeHandler}
+            onBlur={cityBlurHandler}
+            autoComplete='off'
+          />
+          {cityIsInvalid && <small>Campo richiesto</small>}
         </div>
         <div className={classes.actions}>
           <button type='button' onClick={props.onCancel}>
             Annulla
           </button>
-          <button className={classes.submit}>Conferma Ordine</button>
+          <button className={classes.submit} disabled={!formIsValid}>
+            Conferma Ordine
+          </button>
         </div>
       </form>
     </>
