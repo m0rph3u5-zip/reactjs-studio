@@ -4,6 +4,7 @@ import configData from '../../env/config.json';
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
+import { Fragment } from 'react';
 
 const AvailableMeals = () => {
   const [loading, setLoading] = useState(false);
@@ -40,22 +41,39 @@ const AvailableMeals = () => {
     getData();
   }, []);
 
-  const mealsList = menu.map((item) => (
-    <MealItem
-      key={item.id}
-      id={item.id}
-      name={item.name}
-      description={item.description}
-      price={item.price}
-    />
-  ));
+  const loadingUI = (
+    <Fragment>
+      {loading && !error && <div>Caricamento dati in corso...</div>}
+    </Fragment>
+  );
+
+  const errorUI = (
+    <Fragment>
+      {error && <div>Impossibile caricare i dati. Riprova più tardi!</div>}
+    </Fragment>
+  );
+
+  const mealsList = (
+    <Fragment>
+      {!loading && !error &&
+        menu.map((item) => (
+          <MealItem
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            description={item.description}
+            price={item.price}
+          />
+        ))}
+    </Fragment>
+  );
 
   return (
     <section className={classes.meals}>
       <Card>
-        {loading && !error && <div>Caricamento dati in corso...</div>}
-        {error && <div>Impossibile caricare i dati. Riprova più tardi!</div>}
-        {!loading && !error && <ul>{mealsList}</ul>}
+        {loadingUI}
+        {errorUI}
+        <ul>{mealsList}</ul>
       </Card>
     </section>
   );
