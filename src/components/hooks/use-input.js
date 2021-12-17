@@ -30,7 +30,7 @@ const useInput = (validateValue) => {
     initialInputState
   );
 
-  const valueChangeHander = (e) => {
+  const valueChangeHandler = (e) => {
     dispatch({ type: ActionType.INPUT, value: e.target.value });
   };
 
@@ -41,7 +41,7 @@ const useInput = (validateValue) => {
   const valueIsValid = validateValue(inputState.value);
   const hasError = !valueIsValid && inputState.isTouched;
 
-  const reset = () => {
+  const resetHandler = () => {
     dispatch({ type: ActionType.RESET });
     dispatch({ type: ActionType.RESET });
   };
@@ -50,9 +50,9 @@ const useInput = (validateValue) => {
     value: inputState.value,
     isValid: valueIsValid,
     hasError,
-    reset,
-    valueChangeHander,
+    valueChangeHandler,
     inputBlurHandler,
+    resetHandler,
   };
 };
 

@@ -2,10 +2,11 @@ import classes from './Checkout.module.css';
 import useInput from '../hooks/use-input';
 
 const validateValue = (value) => value.trim().length > 0;
+const validateCap = (value) => value.trim().length === 5;
 const validateEmail = (value) => {
   const validators = ['@', '.'];
   return (
-    value.trim().length > 0 && validators.every((crt) => email.includes(crt))
+    value.trim().length > 0 && validators.every((crt) => value.includes(crt))
   );
 };
 
@@ -13,73 +14,109 @@ const Checkout = (props) => {
   const {
     value: nameValue,
     isValid: nameIsValid,
+    hasError: nameIsInvalid,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
-    hasError: nameIsInvalid,
-    reset: nameReset,
+    resetHandler: nameReset,
   } = useInput(validateValue);
 
   const {
     value: emailValue,
     isValid: emailIsValid,
+    hasError: emailIsInvalid,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-    hasError: emailIsInvalid,
-    reset: emailReset,
+    resetHandler: emailReset,
   } = useInput(validateEmail);
 
   const {
     value: addressValue,
     isValid: addressIsValid,
+    hasError: addressIsInvalid,
     valueChangeHandler: addressChangeHandler,
     inputBlurHandler: addressBlurHandler,
-    hasError: addressIsInvalid,
-    reset: addressReset,
+    resetHandler: addressReset,
   } = useInput(validateValue);
 
   const {
     value: capValue,
     isValid: capIsValid,
+    hasError: capIsInvalid,
     valueChangeHandler: capChangeHandler,
     inputBlurHandler: capBlurHandler,
-    hasError: capIsInvalid,
-    reset: capReset,
-  } = useInput(validateValue);
+    resetHandler: capReset,
+  } = useInput(validateCap);
 
   const {
     value: cityValue,
     isValid: cityIsValid,
+    hasError: cityIsInvalid,
     valueChangeHandler: cityChangeHandler,
     inputBlurHandler: cityBlurHandler,
-    hasError: cityIsInvalid,
-    reset: cityReset,
+    resetHandler: cityReset,
   } = useInput(validateValue);
 
-  const formIsValid = nameIsValid && emailIsValid && cityIsValid && capIsValid && addressIsValid && capReset;
+  const formIsValid =
+    nameIsValid && emailIsValid && cityIsValid && capIsValid && addressIsValid;
 
   const resetForm = () => {
     nameReset();
     addressReset();
     emailReset();
     cityReset();
+    capReset();
   };
 
-  const confirmHandler = (e) => {
+  const confirmHandler = async (e) => {
     e.preventDefault();
 
-    console.log('checkout submitted successfull..');
+    if (
+      cityIsInvalid ||
+      capIsInvalid ||
+      addressIsInvalid ||
+      emailIsInvalid ||
+      nameIsInvalid
+    ) {
+      formIsValid = false;
+      return;
+    }
+
+    const formData = {
+      name: nameValue,
+      email: emailValue,
+      address: addressValue,
+      city: cityValue,
+      cap: capValue,
+    };
+    await props.onConfirm(formData);
     resetForm();
   };
+
+  const nameControlClass = `${classes.control} ${
+    nameIsInvalid ? classes.invalid : ''
+  }`;
+
+  const emailControlClass = `${classes.control} ${
+    emailIsInvalid ? classes.invalid : ''
+  }`;
+
+  const addressControlClass = `${classes.control} ${
+    addressIsInvalid ? classes.invalid : ''
+  }`;
+
+  const capControlClass = `${classes.control} ${
+    capIsInvalid ? classes.invalid : ''
+  }`;
+
+  const cityControlClass = `${classes.control} ${
+    cityIsInvalid ? classes.invalid : ''
+  }`;
 
   return (
     <>
       <hr />
       <form className={classes.form} onSubmit={confirmHandler}>
-        <div
-          className={`${classes.control} ${
-            nameIsInvalid ? classes.invalid : ''
-          }`}
-        >
+        <div className={nameControlClass}>
           <label htmlFor='name'>Nominativo</label>
           <input
             type='text'
@@ -91,11 +128,7 @@ const Checkout = (props) => {
           />
           {nameIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div
-          className={`${classes.control} ${
-            emailIsInvalid ? classes.invalid : ''
-          }`}
-        >
+        <div className={emailControlClass}>
           <label htmlFor='email'>E-Mail</label>
           <input
             type='text'
@@ -107,11 +140,7 @@ const Checkout = (props) => {
           />
           {emailIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div
-          className={`${classes.control} ${
-            addressIsInvalid ? classes.invalid : ''
-          }`}
-        >
+        <div className={addressControlClass}>
           <label htmlFor='address'>Indirizzo</label>
           <input
             type='text'
@@ -123,14 +152,12 @@ const Checkout = (props) => {
           />
           {addressIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div
-          className={`${classes.control} ${
-            capIsInvalid ? classes.invalid : ''
-          }`}
-        >
+        <div className={capControlClass}>
           <label htmlFor='cap'>CAP</label>
           <input
             type='text'
+            minLength={5}
+            maxLength={5}
             id='cap'
             value={capValue}
             onChange={capChangeHandler}
@@ -139,12 +166,8 @@ const Checkout = (props) => {
           />
           {capIsInvalid && <small>Campo richiesto</small>}
         </div>
-        <div
-          className={`${classes.control} ${
-            cityIsInvalid ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor='city'>Citta</label>
+        <div className={cityControlClass}>
+          <label htmlFor='city'>Città</label>
           <input
             type='text'
             id='city'

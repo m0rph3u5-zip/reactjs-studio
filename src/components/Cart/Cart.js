@@ -1,5 +1,6 @@
 import { React, useContext, useState } from 'react';
 
+import config from '../../env/config.json';
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
@@ -27,7 +28,25 @@ const Cart = (props) => {
 
   const onCancelOrderHandler = () => {
     setIsCheckout(false);
-  }
+  };
+
+  const confirmOrderHandler = async (userData) => {
+    const response = await fetch(
+      `${config.serverUrl}${config.order.endpoint}`,
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          userData: userData,
+          cartItems: cartCtx.items,
+        }),
+      }
+    );
+    let result = await response.json();
+    alert(result.message);
+  };
 
   const cartItems = (
     <ul className={classes['cart-items']}>
@@ -66,7 +85,12 @@ const Cart = (props) => {
         <span>{totalAmount}</span>
       </div>
       {!isCheckout && modalAction}
-      {isCheckout && <Checkout onCancel={onCancelOrderHandler}/>}
+      {isCheckout && (
+        <Checkout
+          onConfirm={confirmOrderHandler}
+          onCancel={onCancelOrderHandler}
+        />
+      )}
     </Modal>
   );
 };

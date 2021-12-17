@@ -50,6 +50,18 @@
   color: white;
 }
 
+.actions .submit:disabled {
+  border: 1px solid #cfcfcf;
+  background-color: #cfcfcf;
+  color: #eee;
+}
+
+.actions .submit:disabled:hover {
+  border: 1px solid #cfcfcf;
+  background-color: #cfcfcf;
+  color: #eee;
+}
+
 .actions .submit:hover,
 .actions .submit:active {
   background-color: #7a2706;
