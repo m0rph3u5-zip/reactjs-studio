@@ -10,6 +10,7 @@ import Checkout from './Checkout';
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
   const [isCheckout, setIsCheckout] = useState(false);
+  const [sendingData, setSendingData] = useState(false);
 
   const totalAmount = `€${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -31,6 +32,7 @@ const Cart = (props) => {
   };
 
   const confirmOrderHandler = async (userData) => {
+    setSendingData(true);
     const response = await fetch(
       `${config.serverUrl}${config.order.endpoint}`,
       {
@@ -44,11 +46,20 @@ const Cart = (props) => {
         }),
       }
     );
-    let result = await response.json();
-    alert(result.message);
+
+    if (!response.ok) {
+      console.error(response.status);
+      alert('Qualcosa è andato storto. Riprova più tardi.');
+      setSendingData(false);
+      return;
+    }
+
+    setSendingData(false);
+    cartCtx.clearItems();
+    props.onClose();
   };
 
-  const cartItems = (
+  const cartItemsContent = (
     <ul className={classes['cart-items']}>
       {cartCtx.items.map((item) => (
         <CartItem
@@ -63,7 +74,7 @@ const Cart = (props) => {
     </ul>
   );
 
-  const modalAction = (
+  const modalActionContent = (
     <div className={classes.actions}>
       <button className={classes['button--alt']} onClick={props.onClose}>
         Torna al menù
@@ -76,21 +87,30 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const modalContent = (
+    <>
       <h2>Il tuo carrello</h2>
-      {cartItems}
+      {cartItemsContent}
       <div className={classes.total}>
         <span>Totale</span>
         <span>{totalAmount}</span>
       </div>
-      {!isCheckout && modalAction}
+      {!isCheckout && modalActionContent}
       {isCheckout && (
         <Checkout
           onConfirm={confirmOrderHandler}
           onCancel={onCancelOrderHandler}
         />
       )}
+    </>
+  );
+
+  const SendingDataContent = <div>Invio dati in corso...</div>;
+
+  return (
+    <Modal onClose={props.onClose}>
+      {!sendingData && modalContent}
+      {sendingData && SendingDataContent}
     </Modal>
   );
 };

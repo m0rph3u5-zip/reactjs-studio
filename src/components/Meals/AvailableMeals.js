@@ -1,10 +1,10 @@
+import { Fragment } from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 
 import configData from '../../env/config.json';
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
-import { Fragment } from 'react';
 
 const AvailableMeals = () => {
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,8 @@ const AvailableMeals = () => {
 
   const mealsList = (
     <Fragment>
-      {!loading && !error &&
+      {!loading &&
+        !error &&
         menu.map((item) => (
           <MealItem
             key={item.id}
