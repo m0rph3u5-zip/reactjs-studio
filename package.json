@@ -1,0 +1,23 @@
+{
+  "name": "reactjs-studio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/m0rph3u5-zip/reactjs-studio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m0rph3u5-zip/reactjs-studio/issues"
+  },
+  "homepage": "https://github.com/m0rph3u5-zip/reactjs-studio#readme",
+  "dependencies": {
+    "redux": "^4.1.2"
+  }
+}
