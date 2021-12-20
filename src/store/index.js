@@ -1,13 +1,9 @@
 import { createStore } from 'redux';
+import actionType from '../static/Static';
 
 const initState = {
   counter: 0,
   show: true,
-};
-const actionType = {
-  ADD: 'ADD',
-  REMOVE: 'REMOVE',
-  SHOW: 'SHOW',
 };
 
 const counterReducer = (state = initState, action) => {

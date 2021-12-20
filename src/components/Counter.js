@@ -1,27 +1,28 @@
 import classes from './Counter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
+import actionType from '../static/Static';
 
 const Counter = () => {
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.show);
+  const counter = useSelector(state => state.counter);
+  const show = useSelector(state => state.show);
   const dispatch = useDispatch();
   const addHandler = () => {
     dispatch({
-      type: 'ADD',
+      type: actionType.ADD,
       value: 1,
     });
   };
 
   const removeHandler = () => {
     dispatch({
-      type: 'REMOVE',
+      type: actionType.REMOVE,
       value: 2,
     });
   };
 
   const showCounterHandler = () => {
     dispatch({
-      type: 'SHOW',
+      type: actionType.SHOW,
       show: !show,
     });
   };
