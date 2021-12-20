@@ -1,30 +1,26 @@
 import classes from './Counter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import actionType from '../static/Static';
+import { counterActions } from '../store/counter';
 
 const Counter = () => {
-  const counter = useSelector(state => state.counter);
-  const show = useSelector(state => state.show);
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.show);
   const dispatch = useDispatch();
+
   const addHandler = () => {
-    dispatch({
-      type: actionType.ADD,
-      value: 1,
-    });
+    dispatch(counterActions.increment());
   };
 
   const removeHandler = () => {
-    dispatch({
-      type: actionType.REMOVE,
-      value: 2,
-    });
+    dispatch(counterActions.decrement());
+  };
+
+  const increaseHandler = () => {
+    dispatch(counterActions.byAmount(5));
   };
 
   const showCounterHandler = () => {
-    dispatch({
-      type: actionType.SHOW,
-      show: !show,
-    });
+    dispatch(counterActions.toggle());
   };
 
   return (
@@ -34,6 +30,7 @@ const Counter = () => {
       <div>
         <button onClick={addHandler}>Incrementa</button>
         <button onClick={removeHandler}>Decrementa</button>
+        <button onClick={increaseHandler}>Step by 5</button>
       </div>
       <button onClick={showCounterHandler}>Toggle Visibility</button>
     </main>
