@@ -16,13 +16,19 @@ const counterSlice = createSlice({
       state.counter--;
     },
     byAmount: (state, action) => {
-      state.counter = state.counter + action.payload;
+      state.counter += action.payload;
     },
     toggle: (state) => {
       state.show = !state.show;
     },
   },
 });
+
+export const incrementAsync = (amount) => (dispatch) => {
+  setTimeout(() => {
+    dispatch(counterSlice.actions.byAmount(amount));
+  }, 1000);
+};
 
 export const counterActions = counterSlice.actions;
 export default counterSlice.reducer;

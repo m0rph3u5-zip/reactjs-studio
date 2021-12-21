@@ -1,8 +1,10 @@
+import { useRef } from 'react';
 import classes from './Counter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { counterActions } from '../store/counter';
+import { counterActions, incrementAsync } from '../store/counter';
 
 const Counter = () => {
+  const inputRef = useRef(0);
   const counter = useSelector((state) => state.counter.counter);
   const show = useSelector((state) => state.counter.show);
   const dispatch = useDispatch();
@@ -23,6 +25,10 @@ const Counter = () => {
     dispatch(counterActions.toggle());
   };
 
+  const testAsyncHandler = () => {
+    dispatch(incrementAsync(+inputRef.current.value));
+  };
+
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
@@ -31,6 +37,8 @@ const Counter = () => {
         <button onClick={addHandler}>Incrementa</button>
         <button onClick={removeHandler}>Decrementa</button>
         <button onClick={increaseHandler}>Step by 5</button>
+        <button onClick={testAsyncHandler}>Incrementa (Async)</button>
+        <input type='number' name='step' ref={inputRef} />
       </div>
       <button onClick={showCounterHandler}>Toggle Visibility</button>
     </main>
