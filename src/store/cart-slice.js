@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { uiActions } from '../store/ui-slice';
 
 const initialState = {
   items: [],
@@ -43,6 +44,12 @@ const cartSlice = createSlice({
     },
   },
 });
+
+// const sendData = (cartData) => async (dispatch) => {
+//   dispatch(uiActions.showNotify({
+
+//   }));
+// };
 
 export const cartActions = cartSlice.actions;
 export default cartSlice;
