@@ -7,6 +7,7 @@ import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
 
 import { uiActions } from './store/ui-slice';
+import { cartActions } from './store/cart-slice';
 
 function App() {
   const firstUpdate = useRef(true);
@@ -80,9 +81,19 @@ function App() {
         throw new Error('Impossiile caricare i dati sul server.');
       }
 
-      getCartData();
+      const data = await response.json();
+      return data;
     };
-  }, []);
+
+    getCartData().then((data) => {
+      dispatch(
+        cartActions.overrideCart({
+          items: data.items || [],
+          totalQuantity: data.totalQuantity,
+        })
+      );
+    });
+  }, [dispatch]);
 
   return (
     <>

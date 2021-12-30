@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { uiActions } from '../store/ui-slice';
 
 const initialState = {
   items: [],
@@ -10,6 +9,10 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    overrideCart: (state, action) => {
+      state.items = action.payload.items;
+      state.totalQuantity = action.payload.totalQuantity;
+    },
     addItemToCart: (state, action) => {
       const currentItem = action.payload;
       const existItem = state.items.find((i) => i.id === currentItem.id);
@@ -44,12 +47,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
-// const sendData = (cartData) => async (dispatch) => {
-//   dispatch(uiActions.showNotify({
-
-//   }));
-// };
 
 export const cartActions = cartSlice.actions;
 export default cartSlice;

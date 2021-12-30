@@ -26,9 +26,16 @@ const Cart = (props) => {
     />
   ));
 
+  let message = '';
+  if (items.length > 0) {
+    message = 'Il tuo carrello';
+  } else {
+    message = 'Il tuo carrello è vuoto!';
+  }
+
   return (
     <Card className={classes.cart}>
-      <h2>Il tuo carrello</h2>
+      <h2>{message}</h2>
       <ul>{itemList}</ul>
       <button onClick={closeCartHandler}>Chiudi</button>
     </Card>

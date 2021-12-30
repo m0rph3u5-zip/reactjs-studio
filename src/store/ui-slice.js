@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   cartIsVisible: false,
-  notifyContent: null,
+  notification: null,
 };
 
 const uiSlice = createSlice({
@@ -12,11 +12,12 @@ const uiSlice = createSlice({
     toggle: (state) => {
       state.cartIsVisible = !state.cartIsVisible;
     },
-    showNotify: (state, action) => {
-      state.notifyContent = {
-        title: action.payload.title,
-        content: action.payload.content,
+    showNotification(state, action) {
+      state.notification = {
+        show: action.payload.show,
         status: action.payload.status,
+        title: action.payload.title,
+        message: action.payload.message,
       };
     },
   },
