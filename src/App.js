@@ -10,8 +10,8 @@ import { uiActions } from './store/ui-slice';
 import { GetCartData, PutCartData } from './store/cart-action';
 
 function App() {
-  const firstUpdate = useRef(true);
   const dispatch = useDispatch();
+  const firstUpdate = useRef(true);
   const showCart = useSelector((state) => state.ui.cartIsVisible);
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
