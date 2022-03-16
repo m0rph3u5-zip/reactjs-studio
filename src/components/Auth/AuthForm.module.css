@@ -36,6 +36,11 @@
   padding: 0.25rem;
 }
 
+.control input.error {
+  background-color: #ff0000;
+  color: #ff0000;
+}
+
 .actions {
   margin-top: 1.5rem;
   display: flex;
