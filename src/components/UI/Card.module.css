@@ -1,0 +1,57 @@
+:root {
+  --bg-image: url('https://picsum.photos/640/360');
+}
+
+/* body {
+  background-color: #1d1e22;
+  font-family: sans-serif;
+  display: flex;
+} */
+
+.card {
+  margin: 1rem;
+  padding: 1rem;
+  height: 300px;
+  width: 300px;
+  text-align: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: gray;
+  border-radius: 10px;
+}
+
+.card h1 {
+  transition: visibility 0s, opacity 0.3s linear;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.bgBlur {
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.bgBlur:hover::before {
+  content: '';
+  filter: blur(30px);
+}
+
+.bgBlur:hover h1 {
+  visibility: visible;
+  opacity: 1;
+}
+
+.bgBlur::before {
+  transition: all 0.5s ease-in-out;
+  content: '';
+  background-image: var(--bg-image);
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  filter: blur(0px);
+  z-index: -1;
+}

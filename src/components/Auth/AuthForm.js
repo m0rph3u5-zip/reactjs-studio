@@ -1,4 +1,6 @@
 import { useState, useRef, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import AuthContext from '../../store/auth-context';
 
 import classes from './AuthForm.module.css';
@@ -15,6 +17,7 @@ const emailValidation = (value) => {
 
 const AuthForm = () => {
   const authCtx = useContext(AuthContext);
+  const history = useHistory();
   const userEmail = useRef();
   const userPassword = useRef();
 
@@ -71,6 +74,7 @@ const AuthForm = () => {
       })
       .then((data) => {
         authCtx.login(data.idToken);
+        history.replace('/');
       })
       .catch((error) => {
         alert(error);
@@ -97,6 +101,7 @@ const AuthForm = () => {
           <input
             type='password'
             id='password'
+            minLength='7'
             required
             ref={userPassword}
             className={`${formInvalid ? classes.error : ''}`}
